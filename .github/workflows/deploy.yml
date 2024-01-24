@@ -20,3 +20,8 @@ jobs:
       with:
         script: |
            az cdn endpoint purge --content-paths  "/*" --profile-name ${{ vars.CDN_PROFILE_NAME }} --name ${{ vars.CDN_ENDPOINT }} --resource-group ${{ vars.RESOURCE_GROUP }}
+      # Azure logout
+    - name: logout
+      run: |
+            az logout
+      if: always()
