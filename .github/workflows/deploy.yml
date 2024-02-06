@@ -10,11 +10,16 @@ jobs:
       - uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
+      - name: Delete previous content
+        uses: azure/CLI@v1
+        with:
+          inlineScript: |
+            az storage blob delete-batch -s $web --account-name ${{ vars.STORAGE_ACCOUNT_NAME }} --auth-mode key
       - name: Upload to blob storage
         uses: azure/CLI@v1
         with:
           inlineScript: |
-            az storage blob upload-batch --account-name ${{ vars.STORAGE_ACCOUNT_NAME }} --auth-mode key -d '$web'  --overwrite -s .
+            az storage blob upload-batch --account-name ${{ vars.STORAGE_ACCOUNT_NAME }} --auth-mode key -d '$web' -s .
 
       - name: Purge CDN endpoint
         uses: azure/CLI@v1
