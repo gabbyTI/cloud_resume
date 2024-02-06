@@ -14,7 +14,8 @@ jobs:
         uses: azure/CLI@v1
         with:
           inlineScript: |
-            az storage blob delete-batch -s $web --account-name ${{ vars.STORAGE_ACCOUNT_NAME }} --auth-mode key
+            az storage blob delete-batch --account-name ${{ vars.STORAGE_ACCOUNT_NAME }} --auth-mode key --source '$web'
+
       - name: Upload to blob storage
         uses: azure/CLI@v1
         with:
